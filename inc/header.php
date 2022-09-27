@@ -15,7 +15,7 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="menu.php">Menu</a></li>
-                <li><a href="">About</a></li>
+                <li><a href="about.php">About</a></li>
                 <li><a href="">Contacts</a></li>
                 <li><a href="">Orders</a></li>
                 <li>

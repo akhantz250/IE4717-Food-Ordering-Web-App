@@ -27,7 +27,7 @@
 }
 
 body{
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     min-width: 900px;
 }
 
@@ -115,7 +115,7 @@ footer {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 4px 16px;
+    padding: 6px 24px;
     font-size: 24px;
     background-color: var(--teal-400);
     cursor: pointer;
@@ -128,7 +128,7 @@ footer {
     flex-direction: column;
     align-items: center;
 }
-.weekly-specials h1, .menu h1 {
+.weekly-specials h1, .menu h1, .about h1 {
     text-align: center;
     font-size: 36px;
     font-family: 'Oleo', serif;
@@ -247,4 +247,20 @@ a{
 }
 .menu-item-footer button:hover {
     background-color: var(--teal-700);
+}
+.about h1 {
+    padding-top: 40px;
+}
+main.about {
+    min-height: calc(100vh - 280px);
+}
+main.about section {
+    width: 60%;
+    margin: 80px auto;
+    display: flex;
+    gap: 120px;
+}
+main.about section img {
+    height: 300px;
+    display: block;
 }

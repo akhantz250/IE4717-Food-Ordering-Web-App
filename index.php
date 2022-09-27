@@ -2,7 +2,7 @@
     <main>
         <section class="banner">
             <h1>Your culinary adventure awaits</h1>
-            <button>See our menu</button>
+            <button>Order Now</button>
         </section>
         <section class="weekly-specials">
             <h1>Our weekly specials</h1>
