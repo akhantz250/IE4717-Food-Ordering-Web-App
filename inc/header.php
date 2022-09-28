@@ -17,7 +17,7 @@
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contacts</a></li>
-                <li><a href="">Orders</a></li>
+                <li><a href="order.php">Orders</a></li>
                 <li>
                     <div id="cart-button">
                         <img id="shopping-cart-icon" src="./src/img/shopping_cart_FILL1_wght400_GRAD0_opsz24.svg" alt="">

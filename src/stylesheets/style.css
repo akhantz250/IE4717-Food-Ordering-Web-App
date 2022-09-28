@@ -18,6 +18,7 @@
     --teal-100: #B2DFDB;
     --teal-400: #26A69A;
     --teal-700: #00796B;
+    --timeline-checkmark-size: 24px;
 }
 * {
     margin: 0;
@@ -84,6 +85,9 @@ button:hover {
     border: 1px solid white;
     border-radius: 4px;
     cursor: pointer;
+}
+#cart-button:hover {
+    border-color: var(--amber-600);
 }
 #shopping-cart-icon {
     filter: invert(100%);
@@ -257,7 +261,7 @@ a{
 .about h1 {
     padding-top: 40px;
 }
-main.about, main.contact {
+main.about, main.contact, main.order-page {
     min-height: calc(100vh - 280px);
 }
 main.about section {
@@ -352,4 +356,93 @@ main.about section img {
 }
 #submit-row {
     grid-column: 1 / 3;
+}
+/* timeline */
+.timeline-checkmark {
+    width: var(--timeline-checkmark-size);
+    height: var(--timeline-checkmark-size);
+    border-radius: 100%;
+    background-color: var(--teal-700);
+    position: relative;
+
+}
+.timeline-checkmark::after {
+    content: "";
+    position: absolute;
+    background-color: var(--gray-900);
+    width: 3px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: var(--timeline-checkmark-size);
+    bottom: calc(-104.5px - 32px);
+    /* height of card and grid gap */
+}
+.timeline-checkmark:nth-last-child(2)::after {
+  display: none;
+}
+.timeline-checkmark:first-child {
+    background-color: var(--amber-600);
+}
+.timeline-card:nth-child(2) img {
+    filter: invert(0);
+}
+.timeline-card-icon img {
+    width: 64px;
+    height: 64px;
+    filter: invert(70%);
+}
+.timeline-grid {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: 24px 400px;
+    gap: 32px;
+}
+.timeline-card {
+    border: 1px solid var(--gray-400);
+    border-radius: 4px;
+    padding: 16px;
+    gap: 32px;
+    display: flex;
+    color: var(--gray-400);
+}
+div.timeline-card:nth-child(2){
+    color: black; 
+    border: 1px solid black;
+ }
+.timeline-card-title {
+    font-weight: 900;
+}
+.timeline-card-description {
+    font-size: 12px;
+}
+section.timeline {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 48px;
+}
+.order-info-row {
+    background-color: var(--gray-300);
+    width: 100%;
+    padding: 32px 0;
+    border-bottom: 1px solid black;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+}
+.order-info-row div h2 {
+    font-size: 1.4rem;
+}
+#view-order {
+    padding: 4px 8px;
+    background-color: var(--teal-400);
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+#view-order:hover{
+    background-color: var(--teal-700);
 }

@@ -81,7 +81,7 @@
             </div>
             <div class="contact-form-row">
                 <label for="type">Type *</label>
-                <select name="type" id="type">
+                <select name="type" id="type" required>
                     <option disabled selected value> - select an option - </option>
                     <option value="enquiry">Enquiry</option>
                     <option value="feedback">Feedback</option>

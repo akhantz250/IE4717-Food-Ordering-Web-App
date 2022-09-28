@@ -2,7 +2,7 @@
     <main>
         <section class="banner">
             <h1>Your culinary adventure awaits</h1>
-            <button>Order Now</button>
+            <button><a href="./menu.php">Order Now</a></button>
         </section>
         <section class="weekly-specials">
             <h1>Our weekly specials</h1>
