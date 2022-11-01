@@ -20,6 +20,7 @@
         </section>
         <section class="timeline">
             <div class="timeline-grid">
+                <div class="timeline-time">14:25</div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -28,9 +29,9 @@
                     <div>
                         <div class="timeline-card-title">Pickup Order</div>
                         <div class="timeline-card-description">Order ready to pickup. Enjoy your meal.</div>
-                        <div class="timeline-card-time">14:00</div>
                     </div>
                 </div>
+                <div class="timeline-time">13:45</div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -39,9 +40,9 @@
                     <div>
                         <div class="timeline-card-title">Delivered Order</div>
                         <div class="timeline-card-description">We have delivered your order.</div>
-                        <div class="timeline-card-time">13:30</div>
                     </div>
                 </div>
+                <div class="timeline-time">13:15</div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -50,9 +51,9 @@
                     <div>
                         <div class="timeline-card-title">Prepared Order</div>
                         <div class="timeline-card-description">We have prepared your order.</div>
-                        <div class="timeline-card-time">13:00</div>
                     </div>
                 </div>
+                <div class="timeline-time">12:00</div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -61,10 +62,8 @@
                     <div>
                         <div class="timeline-card-title">Received Order</div>
                         <div class="timeline-card-description">We have received your order.</div>
-                        <div class="timeline-card-time">12:00</div>
                     </div>
                 </div>
-                
             </div>
         </section>
     </main>
