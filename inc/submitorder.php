@@ -27,6 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
     $query = "INSERT INTO orders (CustomerID, Instructions) VALUES ('$customerID', '$message')";
     $conn -> query($query);
     $orderID = $conn -> insert_id;
+    
+    // Create progress
+    $query = "INSERT INTO orderprogress (OrderID) VALUES ('$orderID')";
+    $conn -> query($query);
 
     // Calculate total amount //
     $totalAmount = 0;
@@ -45,13 +49,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
     $query = "UPDATE orders SET TotalSale='$totalAmount' WHERE OrderID = '$orderID'";
     $conn -> query($query);
 
-    
+    // Clear session variables
     unset($_SESSION['cart']);
     unset($_SESSION['totalitems']);
-    echo "Success, new customer: " . $customerID . " new order: " . $orderID;
+    // Add placed orders
+    if (!isset($_SESSION["placedorders"])) {
+        $_SESSION["placedorders"] = array($orderID);
+    } else {
+        array_push($_SESSION["placedorders"], $orderID);
+    }
+    session_write_close();
+    include("orderconfirmation.php");
+    $conn -> close();
     die();
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_SESSION['cart'])) {
-    echo "Something went wrong";
+    echo "Forbidden";
+    $conn -> close();
     die();
 }
 session_abort();

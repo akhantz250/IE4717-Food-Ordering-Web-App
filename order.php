@@ -1,72 +1,40 @@
-<?php include "./inc/header.php" ?>
-
-    <main class="order-page">
-        <section class="order-info">
-            <div class="order-info-row">
-                <div>
-                    <h2>Order ID</h2>
-                    <p>#234789</p>
-                </div>
-                <div>
-                    <h2>Order Placed</h2>
-                    <p>12:00, Wed, 28 Sep</p>
-                </div>
-                <div>
-                    <h2>Order Total</h2>
-                    <p>$100.00</p>
-                </div>
-                <button id="view-order">View Order</button>
-            </div>
-        </section>
-        <section class="timeline">
-            <div class="timeline-grid">
-                <div class="timeline-time">14:25</div>
-                <div class="timeline-checkmark"></div>
-                <div class="timeline-card">
-                    <div class="timeline-card-icon">
-                        <img src="./src/img/order/take-away.png" alt="">
-                    </div>
+<?php
+include "./inc/header.php";
+include "./inc/db_connection.php";
+$show_order = false;
+$orders;
+if (isset($_SESSION["placedorders"])) {
+    $orders = $_SESSION["placedorders"];
+    $show_order = true;
+    rsort($orders);
+}
+$progress = array("Received", "Preparing", "Delivering", "Delivered");
+$display = ($show_order) ? "success" : "failure";
+?>
+<main class="main-section">
+    <h1 class="section-header">Your Orders</h1>
+    <div class="centered-container">
+        <?php if ($show_order) : ?>
+            <?php foreach ($orders as $orderno) : ?>
+                <?php
+                $query = "SELECT DateCreated, Progress FROM orderprogress WHERE OrderID = '$orderno'";
+                $result = $conn->query($query);
+                $data = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0];
+                ?>
+                <div class="view-order-row">
                     <div>
-                        <div class="timeline-card-title">Pickup Order</div>
-                        <div class="timeline-card-description">Order ready to pickup. Enjoy your meal.</div>
+                        <div style="font-size: 18px; margin-bottom:12px">Order #<?php echo $orderno ?></div>
+                        <div class="view-order-subrow">
+                            <div><?php echo $data["DateCreated"] ?></div>
+                            <div><?php echo $progress[$data["Progress"] - 1] ?></div>
+                        </div>
                     </div>
+                    <a class="view-order-btn" href="./trackorder.php?orderno=<?php echo $orderno ?>">View</a>
                 </div>
-                <div class="timeline-time">13:45</div>
-                <div class="timeline-checkmark"></div>
-                <div class="timeline-card">
-                    <div class="timeline-card-icon">
-                        <img src="./src/img/order/fast-delivery.png" alt="">
-                    </div>
-                    <div>
-                        <div class="timeline-card-title">Delivered Order</div>
-                        <div class="timeline-card-description">We have delivered your order.</div>
-                    </div>
-                </div>
-                <div class="timeline-time">13:15</div>
-                <div class="timeline-checkmark"></div>
-                <div class="timeline-card">
-                    <div class="timeline-card-icon">
-                        <img src="./src/img/order/cooking.png" alt="">
-                    </div>
-                    <div>
-                        <div class="timeline-card-title">Prepared Order</div>
-                        <div class="timeline-card-description">We have prepared your order.</div>
-                    </div>
-                </div>
-                <div class="timeline-time">12:00</div>
-                <div class="timeline-checkmark"></div>
-                <div class="timeline-card">
-                    <div class="timeline-card-icon">
-                        <img src="./src/img/order/payment-check.png" alt="">
-                    </div>
-                    <div>
-                        <div class="timeline-card-title">Received Order</div>
-                        <div class="timeline-card-description">We have received your order.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</main>
 <footer>
     Project for IE4717 by Zaw and Zion
 </footer>

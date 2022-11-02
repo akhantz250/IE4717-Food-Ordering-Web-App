@@ -33,7 +33,7 @@ if (isset($_SESSION["cart"])) {
                     <?php foreach ($myObj as $key => $value) : ?>
                         <tr>
                             <td class="order-row-img"><img src="./src/img/fooditems/<?php echo $value["data"]["ImageURL"] ?>.png" alt=""></td>
-                            <td>
+                            <td class="order-row-description">
                                 <div><?php echo $value["data"]["Name"] ?></div>
                                 <div class="unit-price"><?php echo "($" . $value["data"]["Price"] . ")" ?></div>
                             </td>
@@ -43,8 +43,7 @@ if (isset($_SESSION["cart"])) {
                         </tr>
                     <?php endforeach; ?>
                     <tr class="order-total-row">
-                        <td colspan="3" class="centered">Total Amount Payable</td>
-                        <td id="order-total"><?php echo "$" . $currentOrderTotal; ?></td>
+                        <td colspan="4" class="centered">Total Amount Payable: <?php echo "$" . $currentOrderTotal; ?></td>
                     </tr>
                     <tr class="confirm-order-row">
                         <td colspan="4">
@@ -146,7 +145,7 @@ if (isset($_SESSION["cart"])) {
                 </div>
             </div>
         </fieldset>
-        <input type="submit" value="Make Payment">
+        <input id="make-payment-btn" type="submit" value="Make Payment">
     </form>
 </section>
 </main>
@@ -166,3 +165,4 @@ if (isset($_SESSION["cart"])) {
 </script>
 </body>
 </html>
+<?php $conn -> close(); ?>
