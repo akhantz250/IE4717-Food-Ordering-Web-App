@@ -8,12 +8,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
         echo "Missing post data";
         die();
     }
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $phoneno = $_POST["phoneno"];
+    $address = $_POST["name"];
+    $unitno = $_POST["unit"];
+    $postalcode = $_POST["postalcode"];
+
+    $message = $_POST["message"]; // for order
     
-    
+    // Create customer data
+    $query = "INSERT INTO customers (Name, Email, PhoneNumber, Address, PostalCode, UnitNo) 
+              VALUES ('$name', '$email','$phoneno','$address','$postalcode','$unitno')";
+    $conn -> query($query);
+    $customerID = $conn -> insert_id;
+
+    // Create order
+    $query = "INSERT INTO orders (CustomerID, Instructions) VALUES ('$customerID', '$message')";
+    $conn -> query($query);
+    $orderID = $conn -> insert_id;
+
+    // Calculate total amount //
+    $totalAmount = 0;
+    $cartitems = $_SESSION["cart"];
+    foreach ($cartitems as $menuID => $qty) {
+        $query = "SELECT Price FROM menu WHERE MenuID = '$menuID'";
+        $result = $conn -> query($query);
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $data = $rows[0];
+        $unitPrice = $data["Price"];
+        $totalAmount += $unitPrice * $qty;
+        $query = "INSERT INTO orderitems (MenuID, OrderID, Quantity, UnitPrice) 
+                VALUES ('$menuID', '$orderID', '$qty', '$unitPrice')";
+        $conn -> query($query);
+    }
+    $query = "UPDATE orders SET TotalSale='$totalAmount' WHERE OrderID = '$orderID'";
+    $conn -> query($query);
+
     
     unset($_SESSION['cart']);
     unset($_SESSION['totalitems']);
-    echo "Success";
+    echo "Success, new customer: " . $customerID . " new order: " . $orderID;
     die();
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_SESSION['cart'])) {
     echo "Something went wrong";
