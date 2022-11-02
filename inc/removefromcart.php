@@ -19,6 +19,9 @@ if ($_SESSION['cart'][$item] == 1) {
     $quantity = $_SESSION['cart'][$item];
 }
     $_SESSION["totalitems"]--;
-    $myObj = ["success" => true, "removed" => $item, "quantity" => $quantity, "totalitems" => $_SESSION["totalitems"]];
+    $myObj = ["success" => true, "removed" => $item, "quantity" => $quantity, "totalitems" => $_SESSION["totalitems"], "cartitems" => $_SESSION["cart"]];
 
     echo json_encode($myObj);
+    if($_SESSION["totalitems"] == 0) {
+        unset($_SESSION["cart"]);
+    }

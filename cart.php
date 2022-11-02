@@ -2,6 +2,7 @@
     include "./inc/header.php";
     include "./inc/db_connection.php";
     $myObj = array();
+    $totalprice = 0;
     $cart_items;
     if (isset($_SESSION["cart"])) {
         $cart_items = $_SESSION["cart"];
@@ -27,21 +28,27 @@
                             <div class="cart-quantity" data-menuid-quantity="<?php echo $myObj[$key]["data"]["MenuID"]?>"><?php echo $myObj[$key]["quantity"] ?></div>
                             <div class="add-cart-btn" data-menuid="<?php echo $myObj[$key]["data"]["MenuID"]?>"><span class="material-symbols-outlined">add</span></div>
                         </div>
-                        <div class="cart-row-price-wrapper">
-                            $0.00
+                        <div class="cart-row-price-wrapper" data-menuid="<?php echo $myObj[$key]["data"]["MenuID"]?>">
+                            $<?php echo sprintf("%0.2f",$myObj[$key]["data"]["Price"] * $myObj[$key]["quantity"]); ?>
                         </div>
                     </div>
+                    <?php
+                    $totalprice += $myObj[$key]["data"]["Price"] * $myObj[$key]["quantity"];
+                    ?>
                 <?php endforeach; ?>
                 <div class="cart-section-footer">
-                <div class="cart-total-row">Total: $100.00</div>
+                <div class="cart-total-row">Total: <?php echo "$". sprintf('%0.2f',$totalprice)?></div>
                 <div class="cart-section-footer-buttons">
                     <button id="cart-section-footer-clear">Clear All</button>
-                    <button id="cart-section-footer-checkout">Checkout</button>
+                    <a id="cart-section-footer-checkout" href="./checkout.php">Checkout</a>
                 </div>
         </div>
             <?php endif; ?>
             <?php if (empty($myObj)): ?>
-                <div id="empty-cart">Your cart is empty</div>
+                <div class="empty-cart-wrapper">
+                <img id="empty-cart-img" src="./src/img/cart.png" alt="">
+                <div id="empty-cart">Cart is empty</div>
+                </div>
             <?php endif; ?>
         </section>
     </main>
@@ -52,11 +59,32 @@
         const cartTotalElement = document.querySelector("#cart-item-total");
         const removeBtnList = document.querySelectorAll(".remove-cart-btn");
         const addBtnList = document.querySelectorAll(".add-cart-btn");
+        const emptyCartBtn = document.querySelector("#cart-section-footer-clear");
+        let prices;
+        if(emptyCartBtn!= null) {
+            emptyCartBtn.onclick = async function() {
+            const response = await fetch("./inc/clearcart.php", { // fetch the file
+                    method: "POST", // POST method
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, // set the content type
+                    body: "empty=true" // value of the input
+                });
+            const data = await response.json();
+            location.reload();
+
+        }
+        }
+        window.onload = async function() {
+            const response = await fetch("./inc/getprices.php", { // fetch the file
+                    method: "GET", // POST method
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, // set the content type
+                });
+            const data = await response.json();
+            prices = data["prices"];
+        }
         const cartRowContainerElement = document.querySelector(".cart-row-container");
         for (const addBtnElement of addBtnList) {
             addBtnElement.addEventListener("click", (e) => {
                 const menuID = e.target.getAttribute("data-menuid");
-                console.log(menuID);
                 fetch("./inc/addtocart.php", { // fetch the file
                     method: "POST", // POST method
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, // set the content type
@@ -68,6 +96,7 @@
                     cartTotalElement.textContent = `${numberOfItems} items`;
                     const quantityDisplayElement = document.querySelector(`[data-menuid-quantity="${menuID}"]`);
                     quantityDisplayElement.textContent = myObj["cartitems"][menuID];
+                    updatePrice(menuID, myObj["cartitems"][menuID], myObj["cartitems"]);
                 });
             
             })
@@ -75,7 +104,6 @@
         for (const removeBtnElement of removeBtnList) {
             removeBtnElement.addEventListener("click", (e) => {
                 const menuID = e.target.getAttribute("data-menuid");
-                console.log(menuID);
                 fetch("./inc/removefromcart.php", { // fetch the file
                     method: "POST", // POST method
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, // set the content type
@@ -98,12 +126,31 @@
                     const numberOfItems = myObj["totalitems"];
                     cartTotalElement.textContent = `${numberOfItems} items`;
                     const quantityDisplayElement = document.querySelector(`[data-menuid-quantity="${menuID}"]`);
-                    quantityDisplayElement.textContent = myObj["quantity"];
+                    if (quantityDisplayElement != null) {
+                        quantityDisplayElement.textContent = myObj["quantity"];
+                    }
+                    updatePrice(menuID, myObj["quantity"], myObj["cartitems"]);
                 });
             
             })
+        }
+        function updatePrice(menuid, quantity, cartitems) {            
+            let totalcost = 0;
+            const totalCostElement = document.querySelector(".cart-total-row");
+            for (const key in cartitems) {
+                totalcost += cartitems[key] * prices[key];
+            }
+            totalCostElement.textContent = "Total: $" + totalcost.toFixed(2);
+
+            const priceElement = document.querySelector(`.cart-row-price-wrapper[data-menuid='${menuid}']`);
+            if (priceElement === null) {
+                return;
+            }
+            const price = prices[menuid];
+            priceElement.textContent = '$' + (+price * +quantity).toFixed(2);
         }
     </script>
 </body>
 
 </html>
+<?php $conn -> close(); ?>
