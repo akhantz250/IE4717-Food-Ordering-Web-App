@@ -1,9 +1,34 @@
 <?php 
+    include "./inc/admin_table.php";
     session_start();
     if (!isset($_SESSION["isAdmin"])) {
         header("Location: ./forbidden.php");
         die();
     }
+
+    if(is_array($fetchData)){  
+        foreach($fetchData as $data){
+                $id = $data['OrderID'];
+                  if(isset($_POST[$id]) && !empty($_POST["input"])) {
+                      $input = $_POST['input'];
+                      $query = "UPDATE orderprogress SET progress = '$input' WHERE OrderID = $id ";
+                      mysqli_query($conn, $query);
+                          if ($input == 2){
+                              $query = "UPDATE orderprogress SET PreparationStart=CURRENT_TIMESTAMP() WHERE OrderID = '$id' ";
+                      mysqli_query($conn, $query);}
+                      else if ($input == 3){
+                      $query = "UPDATE orderprogress SET DeliveryStart=CURRENT_TIMESTAMP() WHERE OrderID ='$id' ";
+                      mysqli_query($conn, $query);}
+                      else if ($input == 4){
+                      $query = "UPDATE orderprogress SET DateReceived=CURRENT_TIMESTAMP() WHERE OrderID ='$id' ";
+                      mysqli_query($conn, $query);
+                      }		
+                      header("Refresh:0");
+                  }
+              }
+        }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +56,64 @@
             </ul>
         </nav>
     </header>
-    <main class="main-section">
+    <main class="main-section" style="padding-top: 80px;">
+    <table border='1' style="width:80%; margin:auto; border-collapse: collapse;">
+			<thead>
+				<tr>
+					<th>Order ID</th>
+					<th>Items</th>
+					<th>Progress</th>
+					<th>Update</th>
+
+			</thead>
+			<tbody>
+                    <?php if (is_array($fetchData)): ?>
+					<?php foreach ($fetchData as $data): ?>
+						<tr>
+
+							<td><?php echo $data['OrderID'] ?? ''; ?></td>
+							<td><?php
+								$sql = "SELECT MenuID, OrderID, Quantity FROM orderitems";
+								$result = $conn->query($sql);
+
+								while ($row = $result->fetch_assoc())
+									if ($data['OrderID'] == $row['OrderID']) {
+										echo $row['MenuID'] . " -> " . $row['Quantity'] . "<br />";
+									}
+								?></td>
+
+							<td><?php
+								if ($data['Progress'] == 1) {
+									echo 'new';
+								} else if ($data['Progress'] == 2) {
+									echo 'preparing';
+								} else if ($data['Progress'] == 3) {
+									echo 'delivering';
+								} else if ($data['Progress'] == 4) {
+									echo 'ready for pick up';
+								} else {
+									echo 'error';
+								}
+								?></td>
+
+							<td>
+								<form method="post" action="admin_menu.php">
+									<select list name="input">
+										<option value="" disabled selected></option>
+										<option value=2>preparing</option>
+										<option value=3>delivery</option>
+										<option value=4>completed</option>
+										<label><input type=submit value="Update" name="<?php echo $data['OrderID'] ?? ''; ?>"></label>
+								</form>
+							</td>
+						</tr>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+					<tr>
+						<td colspan="8">
+						</td>
+					<tr>
+		</table>
     </main>
 </body>
 <footer>
