@@ -5,6 +5,7 @@ $myObj = array();
 if (!isset($_SESSION["cart"])) {
     $myObj["success"] = false;
     echo json_encode($myObj);
+    die();
 }
 $cartitems = $_SESSION["cart"];
 foreach ($cartitems as $menukey => $value) {

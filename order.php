@@ -14,6 +14,9 @@ $display = ($show_order) ? "success" : "failure";
 <main class="main-section">
     <h1 class="section-header">Your Orders</h1>
     <div class="centered-container">
+        <?php if(!$show_order): ?>
+            <div>You haven't made an order.</div>
+        <?php endif; ?>
         <?php if ($show_order) : ?>
             <?php foreach ($orders as $orderno) : ?>
                 <?php

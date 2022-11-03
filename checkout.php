@@ -127,21 +127,21 @@ if (isset($_SESSION["cart"])) {
             <div class="order-form-row">
                 <div class="order-form-component">
                     <label for="order-form-cc">Credit Card Number *</label>
-                    <input type="text" id="order-form-cc" name="cc" required>
+                    <input type="text" id="order-form-cc" name="cc" required maxlength="16">
                 </div>
             </div>
             <div class="order-form-row order-form-multiple">
                 <div class="order-form-component">
                     <label for="order-form-cvv">CVV *</label>
-                    <input type="text" id="order-form-cvv" name="cvv" required>
+                    <input type="text" id="order-form-cvv" name="cvv" required maxlength="3" minlength="3">
                 </div>
                 <div class="order-form-component">
                     <label for="order-form-address">Issue Date *</label>
-                    <input type="text" id="order-form-ccissue" name="ccissue" required placeholder="MM/YY">
+                    <input type="text" id="order-form-ccissue" name="ccissue" required placeholder="MM/YY" maxlength="5" minlength="5">
                 </div>
                 <div class="order-form-component">
                     <label for="order-form-postalcode">Expiry Date *</label>
-                    <input type="text" id="order-form-ccexpiry" name="ccexpiry" required placeholder="MM/YY">
+                    <input type="text" id="order-form-ccexpiry" name="ccexpiry" required placeholder="MM/YY" maxlength="5" minlength="5">
                 </div>
             </div>
         </fieldset>
@@ -162,6 +162,97 @@ if (isset($_SESSION["cart"])) {
         formSection.classList.remove("hide");
         window.scrollTo(0,0);
     }
+
+    // form validation
+
+    const formElement = document.querySelector("#order-form");
+    const nameInput = document.querySelector("#order-form-name");
+    const emailInput = document.querySelector("#order-form-email");
+    const phoneInput = document.querySelector("#order-form-phone");
+    const postalInput = document.querySelector("#order-form-postalcode");
+
+    const ccInput = document.querySelector("#order-form-cc");
+    const cvvInput = document.querySelector("#order-form-cvv");
+    const ccIssueInput = document.querySelector("#order-form-ccissue");
+    const ccExpiryInput = document.querySelector("#order-form-ccexpiry");
+    const cardholderInput = document.querySelector('#order-form-cardholder');
+
+    formElement.addEventListener("submit", (e) => {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+        const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        const ccRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$/g;
+        const phonenoRegex = /^[6|9|8][0-9]{7}$/g;
+        const postalcodeRegex = /^[0-9]{6}$/g;
+        const cvvRegex = /^[0-9]{3}$/g;
+        const ccDateRegex = /^[0-9]{2}[/][0-9]{2}/;
+
+        if (!nameRegex.test(nameInput.value)) {
+            alert("Invalid name");
+            e.preventDefault();
+            return;
+        }
+        if (!emailRegex.test(emailInput.value)) {
+            alert("Invalid email");
+            e.preventDefault();
+            return;
+        }
+        if (!phonenoRegex.test(phoneInput.value)) {
+            alert("Invalid phone number");
+            e.preventDefault();
+            return;
+        }
+        if (!postalcodeRegex.test(postalInput.value)) {
+            alert("Invalid postal code");
+            e.preventDefault();
+            return;
+        }
+        if (!nameRegex.test(cardholderInput.value)) {
+            alert("Invalid cardholder name");
+            e.preventDefault();
+            return;
+        }
+        if (!ccRegex.test(ccInput.value)) {
+            alert("Invalid CC number");
+            e.preventDefault();
+            return;
+        }
+        if (!cvvRegex.test(cvvInput.value)) {
+            alert("Invalid CVV number");
+            e.preventDefault();
+            return;
+        }
+        if (!ccDateRegex.test(ccIssueInput.value)) {
+            alert("Invalid CC issue date");
+            e.preventDefault();
+            return;
+        }
+        if (!ccDateRegex.test(ccExpiryInput.value)) {
+            alert("Invalid CC expiry date");
+            e.preventDefault();
+            return;
+        }
+        const ccIssueMonth = +ccIssueInput.value.slice(0,2);
+        const ccExpiryMonth = +ccExpiryInput.value.slice(0,2);
+        const ccIssueYear = +ccIssueInput.value.slice(3);
+        const ccExpiryYear = +ccExpiryInput.value.slice(3);
+        if (ccIssueMonth > 12 || ccExpiryMonth > 12 || ccIssueMonth == 0 || ccExpiryMonth == 0) {
+            alert("Invalid month");
+            e.preventDefault();
+            return;
+        }
+        if (ccExpiryYear < ccIssueYear) {
+            alert("Issue date greater than expiry");
+            e.preventDefault();
+            return;
+        }
+        if (ccExpiryYear == ccIssueYear) {
+            if (ccExpiryMonth < ccIssueMonth) {
+                alert("Issue date greater than expiry");
+                e.preventDefault();
+                return; 
+            }
+        }
+    });
 </script>
 </body>
 </html>
