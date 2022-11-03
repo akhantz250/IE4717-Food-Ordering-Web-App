@@ -38,6 +38,10 @@ if (!$show_order) {
     $conn -> close();
     die();
 }
+$displayOrder = ($show_order) ? $orderno : "ERROR";
+$displaySale = ($show_order) ? $data["TotalSale"] : "ERROR";
+$displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
+
 ?>
 <main class="order-page">
     <div class="modal-container">
