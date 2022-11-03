@@ -729,6 +729,7 @@ section.timeline {
     margin-left: auto;
     padding: 4px 16px;
     border-radius: 4px;
+    box-shadow: 2px 2px 2px #BDBDBD;
 }
 .view-order-btn:hover {
     background-color: var(--teal-700);
@@ -790,4 +791,7 @@ section.timeline {
     align-items: center;
     border-radius: 4px;
     user-select: none;
+}
+#loginBtn:focus {
+    background-color: red;
 }

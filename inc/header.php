@@ -33,7 +33,7 @@
                         </div>
                     </a>
                 </li>
-                <li><?php echo isset($_SESSION['name'])? $_SESSION['name'] : "Guest" ?></li>
+                <li id="loginBtn"><?php echo isset($_SESSION['name'])? $_SESSION['name'] : "Guest" ?></li>
             </ul>
         </nav>
     </header>

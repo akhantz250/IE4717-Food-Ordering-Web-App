@@ -17,6 +17,12 @@ if (isset($_GET['orderno']) && isset($_SESSION['placedorders'])) {
     }
     $query = "SELECT Progress FROM orderprogress WHERE OrderID = '$orderno'";
     $result = $conn->query($query);
+    if ($result -> num_rows == 0) {
+        // order does not exist. redirect.
+        header("Location: ./forbidden.php");
+        $conn -> close();
+        die();
+    }
     $current_progress = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]['Progress'];
 
     $query = "SELECT menu.Name, menu.Price, menu.ImageURL, orderitems.Quantity 
@@ -26,10 +32,12 @@ if (isset($_GET['orderno']) && isset($_SESSION['placedorders'])) {
     $result = $conn->query($query);
     $order_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
-$displayOrder = ($show_order) ? $orderno : "ERROR";
-$displaySale = ($show_order) ? $data["TotalSale"] : "ERROR";
-$displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
-
+if (!$show_order) {
+    // the customer didn't make this order. redirect.
+    header("Location: ./forbidden.php");
+    $conn -> close();
+    die();
+}
 ?>
 <main class="order-page">
     <div class="modal-container">

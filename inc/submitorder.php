@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
     $conn -> close();
     die();
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_SESSION['cart'])) {
-    echo "Forbidden";
+    header("Location: ./forbidden.php");
     $conn -> close();
     die();
 }
