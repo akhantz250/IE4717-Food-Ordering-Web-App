@@ -22,6 +22,13 @@ $display = ($show_order) ? "success" : "failure";
                 <?php
                 $query = "SELECT DateCreated, Progress FROM orderprogress WHERE OrderID = '$orderno'";
                 $result = $conn->query($query);
+
+                if ($result -> num_rows == 0) {
+                    header("Location: ./forbidden.php");
+                    $conn -> close();
+                    die();
+                }
+                
                 $data = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0];
                 ?>
                 <div class="view-order-row">
