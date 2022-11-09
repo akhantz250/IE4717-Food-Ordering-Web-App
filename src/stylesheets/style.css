@@ -91,7 +91,7 @@ button:hover {
     border-color: var(--amber-600);
 }
 #shopping-cart-icon {
-    filter: invert(100%);
+    color: white;
 }
 main{
     margin-top: 80px;
@@ -114,7 +114,7 @@ main{
     font-size: 48px;
 }
 footer {
-    margin-top: 120px;
+    margin-top: 80px;
     height: 80px;
     background-color: var(--gray-900);
     color: white;
@@ -144,7 +144,7 @@ footer {
     font-size: 36px;
     font-family: 'Oleo', serif;
     margin-top: 40px;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
 }
 .item img {
     width: 200px;
@@ -187,7 +187,7 @@ a{
     color: white;
 }
 .menu-nav {
-    padding: 26px;
+    padding: 16px;
     border-bottom: 1px solid var(--gray-900);
     margin: auto;
     background-color: var(--gray-300);
@@ -200,7 +200,7 @@ a{
 .menu-nav ul li input[type='submit'] {
     background-color: white;
     border: 1px solid black;
-    width: 120px;
+    width: 110px;
     padding: 8px 0;
     border-radius: 200px;
 }
@@ -266,7 +266,7 @@ a{
     text-align: center;
 }
 main.about, main.contact, main.order-page, main.cart-page, main.checkout-page, .main-section {
-    min-height: calc(100vh - 280px);
+    min-height: calc(100vh - 240px);
 }
 .order-confirmation {
     display: flex;
@@ -434,7 +434,7 @@ section.timeline {
 .order-info-row {
     background-color: var(--gray-300);
     width: 100%;
-    padding: 32px 0;
+    padding: 16px 0;
     border-bottom: 1px solid black;
 
     display: flex;
@@ -774,7 +774,8 @@ section.timeline {
     flex-direction: column;
 }
 .order-items-container {
-    overflow: scroll;
+    overflow: auto;
+    overflow-x: hidden;
     flex-grow: 1;
     gap: 16px;
 }
@@ -794,4 +795,8 @@ section.timeline {
 }
 #loginBtn:focus {
     background-color: red;
+}
+.icon:hover {
+    color: var(--amber-600);
+    cursor: pointer;
 }

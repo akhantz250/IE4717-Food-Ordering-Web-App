@@ -27,6 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
     $query = "INSERT INTO orders (CustomerID, Instructions) VALUES ('$customerID', '$message')";
     $conn -> query($query);
     $orderID = $conn -> insert_id;
+
+    // For login user
+
+    if (isset($_SESSION["userid"])) {
+        $userID = $_SESSION["userid"];
+        $query = "INSERT INTO userorders (UserID, OrderID) VALUES ('$userID', '$orderID')";
+        $conn -> query($query);
+    }
     
     // Create progress
     $query = "INSERT INTO orderprogress (OrderID) VALUES ('$orderID')";

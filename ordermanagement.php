@@ -52,12 +52,18 @@
                 <li><a href="#">Menu</a></li>
                 <li><a href="#">Sales</a></li>
                 <li><a href="ordermanagement.php">Orders</a></li>
-                <li><a href="logoutpage.php">Logout</a></li>
+                <li>
+                <a href="adminlogout.php">
+                    <span style="display: flex; align-items:center" class="material-symbols-outlined icon">
+                            logout
+                    </span>
+                </a>
+                </li>
             </ul>
         </nav>
     </header>
     <main class="main-section" style="padding-top: 80px;">
-    <table border='1' style="width:80%; margin:auto; border-collapse: collapse;">
+    <table border='1' style="width:80%; margin:auto; border-collapse: collapse; text-align: center; ">
 			<thead>
 				<tr>
 					<th>Order ID</th>
@@ -73,46 +79,43 @@
 
 							<td><?php echo $data['OrderID'] ?? ''; ?></td>
 							<td><?php
-								$sql = "SELECT MenuID, OrderID, Quantity FROM orderitems";
+								$sql = "SELECT orderitems.OrderID, menu.Name, orderitems.Quantity FROM orderitems INNER JOIN menu
+								ON orderitems.MenuID=menu.MenuID";
 								$result = $conn->query($sql);
 
 								while ($row = $result->fetch_assoc())
 									if ($data['OrderID'] == $row['OrderID']) {
-										echo $row['MenuID'] . " -> " . $row['Quantity'] . "<br />";
+										echo $row['Name'] . " x " . $row['Quantity'] . "<br />";
 									}
 								?></td>
 
 							<td><?php
 								if ($data['Progress'] == 1) {
-									echo 'new';
+									echo 'New';
 								} else if ($data['Progress'] == 2) {
-									echo 'preparing';
+									echo 'Preparing';
 								} else if ($data['Progress'] == 3) {
-									echo 'delivering';
+									echo 'Delivering';
 								} else if ($data['Progress'] == 4) {
-									echo 'ready for pick up';
+									echo 'Completed';
 								} else {
 									echo 'error';
 								}
 								?></td>
 
 							<td>
-								<form method="post" action="admin_menu.php">
+								<form method="post" action="ordermanagement.php">
 									<select list name="input">
 										<option value="" disabled selected></option>
-										<option value=2>preparing</option>
-										<option value=3>delivery</option>
-										<option value=4>completed</option>
+										<option value=2>Preparing</option>
+										<option value=3>Delivery</option>
+										<option value=4>Completed</option>
 										<label><input type=submit value="Update" name="<?php echo $data['OrderID'] ?? ''; ?>"></label>
 								</form>
 							</td>
 						</tr>
                     <?php endforeach; ?>
                     <?php endif; ?>
-					<tr>
-						<td colspan="8">
-						</td>
-					<tr>
 		</table>
     </main>
 </body>

@@ -1,6 +1,7 @@
-<?php 
-    session_start();
-    $cartTotal = isset($_SESSION["totalitems"]) ? $_SESSION["totalitems"] : 0;
+<?php
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+session_start();
+$cartTotal = isset($_SESSION["totalitems"]) ? $_SESSION["totalitems"] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,9 @@
 
 <body>
     <header class="header">
-        <a href="index.php"><p id="site-name">PRIMAVERA</p></a>
+        <a href="index.php">
+            <p id="site-name">PRIMAVERA</p>
+        </a>
         <nav class="nav-bar">
             <ul>
                 <li><a href="menu.php">Menu</a></li>
@@ -28,12 +31,26 @@
                 <li>
                     <a href="cart.php">
                         <div id="cart-button">
-                            <img id="shopping-cart-icon" src="./src/img/shopping_cart_FILL1_wght400_GRAD0_opsz24.svg" alt="">
-                            <p id="cart-item-total"><?php echo $cartTotal . " items"?></p>
+                            <span class="material-symbols-outlined">
+                                shopping_cart
+                            </span>
+                            <p id="cart-item-total"><?php echo $cartTotal . " items" ?></p>
                         </div>
                     </a>
                 </li>
-                <li id="loginBtn"><?php echo isset($_SESSION['name'])? $_SESSION['name'] : "Guest" ?></li>
+                <?php if (isset($_SESSION["userid"])): ?>
+                <li><?php echo $_SESSION["username"]; ?></li>
+                <li>
+                    <a href="./logout.php">
+                    <span style="display: flex; align-items:center" class="material-symbols-outlined icon">
+                        logout
+                    </span>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if (!isset($_SESSION["userid"])): ?>
+                <li><a href="login.php">Log-In</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

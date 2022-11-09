@@ -1,7 +1,7 @@
 <?php 
     include "./inc/db_connection.php";
     session_start();
-    if (isset($SESSION["isAdmin"])) {
+    if (isset($_SESSION["isAdmin"])) {
         // if already loggedin redirect
         header("Location: ./ordermanagement.php");
         die();
@@ -40,12 +40,12 @@
         <a href="index.php"><p id="site-name">PRIMAVERA</p></a>
     </header>
     <main class="main-section">
-        <h1 class="section-header">Log In Page</h1>
+        <h1 class="section-header">Admin Log-In Page</h1>
         <div class="centered-container">
         <?php if($loginFail): ?>
             <div>Login failed</div>
         <?php endif; ?>
-        <form action="./loginpage.php" method="post" style="display: flex; flex-direction:column; align-items:center;">
+        <form action="./adminlogin.php" method="post" style="display: flex; flex-direction:column; align-items:center;">
             <label for="username">Username</label>
             <input type="text" name="username" id="password">
             <label for="password">Password</label>

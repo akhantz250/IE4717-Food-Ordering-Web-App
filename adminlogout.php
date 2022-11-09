@@ -34,11 +34,10 @@
                 echo "You were not logged in to begin with.";
             }
             ?>
-            <a href="./loginpage.php" style="color: blue; margin-top:32px;">Log In</a>
+            <a href="./adminlogin.php" style="color: blue; margin-top:32px;">Log In</a>
         </div>
     </main> 
 </body>
 <footer>
         Project for IE4717 by Zaw and Zion
-    </footer>
-</body>
+</footer>
