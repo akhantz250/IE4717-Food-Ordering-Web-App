@@ -24,7 +24,6 @@ if (isset($_GET['orderno']) && isset($_SESSION['placedorders'])) {
         die();
     }
     $current_progress = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]['Progress'];
-
     $query = "SELECT menu.Name, menu.Price, menu.ImageURL, orderitems.Quantity 
     FROM orderitems 
     INNER JOIN menu ON menu.MenuID=orderitems.MenuID 
@@ -41,7 +40,6 @@ if (!$show_order) {
 $displayOrder = ($show_order) ? $orderno : "ERROR";
 $displaySale = ($show_order) ? $data["TotalSale"] : "ERROR";
 $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
-
 ?>
 <main class="order-page">
     <div class="modal-container">
@@ -81,8 +79,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
     </section>
     <section class="timeline">
         <div class="timeline-grid">
-
-
             <?php if ($current_progress >= 4) : ?>
                 <?php 
                     $query = "SELECT DeliveryStart FROM orderprogress WHERE OrderID = '$orderno'";
@@ -102,7 +98,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
                     </div>
                 </div>
             <?php endif; ?>
-
 
             <?php if ($current_progress >= 3) : ?>
                 <?php 
@@ -126,7 +121,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
                 </div>
             <?php endif; ?>
 
-
             <?php if ($current_progress >= 2) : ?>
                 <?php 
                     $query = "SELECT PreparationStart FROM orderprogress WHERE OrderID = '$orderno'";
@@ -149,7 +143,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
                 </div>
             <?php endif; ?>
 
-
             <?php if ($current_progress >= 1) : ?>
                 <?php 
                     $query = "SELECT DateCreated FROM orderprogress WHERE OrderID = '$orderno'";
@@ -169,9 +162,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
                     </div>
                 </div>
             <?php endif; ?>
-
-
-
         </div>
     </section>
 </main>
@@ -188,10 +178,7 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
     closeModalBtn.onclick = function() {
         modal.classList.remove("show-modal");
     }
-
-
 </script>
 </body>
-
 </html>
 <?php $conn->close(); ?>

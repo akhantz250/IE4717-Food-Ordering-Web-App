@@ -8,8 +8,7 @@ include "./inc/db_connection.php";
 $display = false;
 $no_results = true;
 
-function top_selling_item($db, $category, $start_date, $end_date)
-{
+function top_selling_item($db, $category, $start_date, $end_date) {
     $query = "SELECT menu.Name, orderitems.MenuID, SUM(orderitems.Quantity) FROM menu INNER JOIN orderitems ON menu.MenuID = orderitems.MenuID INNER JOIN orders ON orderitems.OrderID = orders.OrderID WHERE DateCreated >= '$start_date' AND DateCreated < DATE_ADD('$end_date', INTERVAL 24 DAY_HOUR) AND menu.Category = '$category' GROUP BY orderitems.MenuID ORDER BY SUM(orderitems.Quantity) DESC";
     $result = $db -> query($query);
     if ($result -> num_rows > 0) {
@@ -27,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         $start_date = $_POST["start-date"];
         $end_date = $_POST["end-date"];
         $display = true;
-        $query = "SELECT SUM(TotalSale), COUNT(OrderID) FROM orders WHERE DateCreated >= '$start_date' AND DateCreated < DATE_ADD('$end_date', INTERVAL 24 DAY_HOUR)";
+        $query = "SELECT SUM(TotalSale), COUNT(OrderID), AVG(TotalSale) FROM orders WHERE DateCreated >= '$start_date' AND DateCreated < DATE_ADD('$end_date', INTERVAL 24 DAY_HOUR)";
         $result = $conn -> query($query);
         $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if ($rows[0]["COUNT(OrderID)"] > 0) {
@@ -77,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 <div style="margin-bottom: 64px;"><?php echo $start_date . " to " . $end_date?></div>
                 <div><?php echo "Total orders: " . $data["COUNT(OrderID)"]?></div>
                 <div><?php echo "Total sales: $" . $data["SUM(TotalSale)"]?></div>
-                <div style="margin-top: 64px;"><?php echo "Total selling main: " . $topSellingMain?></div>
+                <div><?php echo "Average sale: $" . number_format($data["AVG(TotalSale)"], 2)?></div>
+                <div style="margin-top: 64px;"><?php echo "Top selling main: " . $topSellingMain?></div>
                 <div><?php echo "Top selling starter: " . $topSellingStarters?></div>
                 <div><?php echo "Top selling dessert: " . $topSellingDessert?></div>
                 <div><?php echo "Top selling drink: " . $topSellingDrink?></div>

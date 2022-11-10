@@ -13,7 +13,6 @@
             $selected_category = "mains";
         }
     }
-
     $query = "SELECT MenuID, Name, Price, ImageURL FROM `menu` WHERE Category = '$selected_category' AND Availability = 'yes'";
     $result = mysqli_query($conn, $query);
     $menu_items_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -21,18 +20,18 @@
     <main class="menu">
         <nav class="menu-nav">
             <form action="menu.php" method="get">
-            <ul>
-                <?php 
-                    foreach ($categories as $category) {
-                        $text = ucfirst($category);
-                        if ($selected_category == $category) {
-                            echo "<li><input class='menu-nav-selected' type='submit' value='$text' name='type'></li>";
-                        } else {
-                            echo "<li><input type='submit' value='$text' name='type'></li>";
+                <ul>
+                    <?php 
+                        foreach ($categories as $category) {
+                            $text = ucfirst($category);
+                            if ($selected_category == $category) {
+                                echo "<li><input class='menu-nav-selected' type='submit' value='$text' name='type'></li>";
+                            } else {
+                                echo "<li><input type='submit' value='$text' name='type'></li>";
+                            }
                         }
-                    }
-                ?>
-            </ul>
+                    ?>
+                </ul>
             </form>
         </nav>
         <h1>Menu</h1>
@@ -70,11 +69,7 @@
                 });
             });
         }
-
     </script>
 </body>
-
 </html>
-<?php 
-    $conn-> close();
-?>
+<?php $conn-> close();?>

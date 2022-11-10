@@ -3,7 +3,6 @@ ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 session_start();
 $cartTotal = isset($_SESSION["totalitems"]) ? $_SESSION["totalitems"] : 0;
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,18 +37,17 @@ $cartTotal = isset($_SESSION["totalitems"]) ? $_SESSION["totalitems"] : 0;
                         </div>
                     </a>
                 </li>
-                <?php if (isset($_SESSION["userid"])): ?>
-                <li><?php echo $_SESSION["username"]; ?></li>
-                <li>
-                    <a href="./logout.php">
-                    <span style="display: flex; align-items:center" class="material-symbols-outlined icon">
-                        logout
-                    </span>
-                    </a>
-                </li>
+                <?php if (isset($_SESSION["userid"])) : ?>
+                    <li><?php echo $_SESSION["username"]; ?></li>
+                    <li>
+                        <a href="./logout.php">
+                            <span style="display: flex; align-items:center" class="material-symbols-outlined icon">
+                                logout
+                            </span></a>
+                    </li>
                 <?php endif; ?>
-                <?php if (!isset($_SESSION["userid"])): ?>
-                <li><a href="login.php">Log-In</a></li>
+                <?php if (!isset($_SESSION["userid"])) : ?>
+                    <li><a href="login.php">Log-In</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

@@ -829,3 +829,29 @@ section.timeline {
     display: flex;
     flex-direction: row;
 }
+.feedback-container {
+    background-color: var(--gray-300);
+    width: 80%;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 24px;
+    margin-top: 32px;
+}
+.feedback-first-row {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.feedback-second-row {
+    margin-top: 16px;
+    background-color: white;
+    padding: 8px 32px;
+}
+.feedback-first-row-col {
+    width: 18%;
+    text-align: center;
+}
+.feedback-row-label{
+    margin-top: 8px;
+}
