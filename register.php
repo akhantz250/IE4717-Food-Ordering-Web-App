@@ -32,9 +32,9 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["conf
 }
 ?>
     <main class="main-section">
-        <h1 class="section-header">Register Page</h1>
+        <h1 class="section-header">Register</h1>
         <div class="centered-container">
-        <form id="register-form" action="./register.php" method="post" style="display: flex; flex-direction:column; align-items:center;">
+        <form id="register-form" action="./register.php" method="post" style="display: flex; flex-direction:column; align-items:center;" class="login-form">
             <label for="username">Username</label>
             <input type="text" name="username" id="username" required minlength="5" maxlength="16">
             <label for="password">Password</label>

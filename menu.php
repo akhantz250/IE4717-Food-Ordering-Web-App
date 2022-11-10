@@ -14,7 +14,7 @@
         }
     }
 
-    $query = "SELECT MenuID, Name, Price, ImageURL FROM `menu` WHERE Category = '$selected_category'";
+    $query = "SELECT MenuID, Name, Price, ImageURL FROM `menu` WHERE Category = '$selected_category' AND Availability = 'yes'";
     $result = mysqli_query($conn, $query);
     $menu_items_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>

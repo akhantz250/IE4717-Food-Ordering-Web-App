@@ -25,7 +25,7 @@
         <a href="index.php"><p id="site-name">PRIMAVERA</p></a>
     </header>
     <main class="main-section">
-        <h1 class="section-header">Log Out Page</h1>
+        <h1 class="section-header">Log-Out</h1>
         <div class="centered-container">
             <?php 
             if ($isLoggedOut) {

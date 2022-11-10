@@ -1,4 +1,18 @@
-<?php include "./inc/header.php" ?>
+<?php include "./inc/header.php";
+include "./inc/db_connection.php";
+if (isset($_POST["name"]) && isset($_POST["body"]) && isset($_POST["email"]) && isset($_POST["phone"]) && isset($_POST["type"]) && isset($_POST["order"])) {
+    $name = $_POST["name"];
+    $phone = $_POST["phone"];
+    $message = $_POST["body"];
+    $type = $_POST["type"];
+    $orderno = $_POST["order"];
+    $email = $_POST["email"];
+
+    $query = "INSERT INTO feedback (Name, Email, PhoneNo, Type, Message, OrderNo) VALUES ('$name', '$email', '$phone' ,'$type', '$message', '$orderno')";
+    $conn->query($query);
+    $conn->close();
+}
+?>
 
 <main class="contact">
     <section class="info">
@@ -63,39 +77,39 @@
         <h1>Get in touch with us</h1>
         <form action="contact.php" method="post" id="feedback-form">
             <div class="contact-form-wrapper">
-            <div class="contact-form-row">
-                <label for="name">Name *</label>
-                <input type="text" name="name" id="name" required>
-            </div>
-            <div class="contact-form-row" id="body-row">
-                <label for="body">Message *</label>
-                <textarea id="body" name="body"></textarea>
-            </div>
-            <div class="contact-form-row">
-                <label for="email">Email *</label>
-                <input type="email" name="email" id="email" required>
-            </div>
-            <div class="contact-form-row">
-                <label for="phone">Phone No *</label>
-                <input type="text" name="phone" id="phone" required>
-            </div>
-            <div class="contact-form-row">
-                <label for="type">Type *</label>
-                <select name="type" id="type" required>
-                    <option disabled selected value> - select an option - </option>
-                    <option value="enquiry">Enquiry</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="business">Business</option>
-                    <option value="others">Others</option>
-                </select>
-            </div>
-            <div class="contact-form-row">
-                <label for="order">Order Number</label>
-                <input type="text" name="order" id="order">
-            </div>
-            <div class="contact-form-row" id="submit-row">
-                <input type="submit">
-            </div>
+                <div class="contact-form-row">
+                    <label for="name">Name *</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="contact-form-row" id="body-row">
+                    <label for="body">Message *</label>
+                    <textarea id="body" name="body"></textarea>
+                </div>
+                <div class="contact-form-row">
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="contact-form-row">
+                    <label for="phone">Phone No *</label>
+                    <input type="text" name="phone" id="phone" required>
+                </div>
+                <div class="contact-form-row">
+                    <label for="type">Type *</label>
+                    <select name="type" id="type" required>
+                        <option disabled selected value> - select an option - </option>
+                        <option value="enquiry">Enquiry</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="business">Business</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <div class="contact-form-row">
+                    <label for="order">Order Number</label>
+                    <input type="text" name="order" id="order">
+                </div>
+                <div class="contact-form-row" id="submit-row">
+                    <input type="submit">
+                </div>
             </div>
         </form>
     </section>

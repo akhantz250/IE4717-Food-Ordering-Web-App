@@ -800,3 +800,32 @@ section.timeline {
     color: var(--amber-600);
     cursor: pointer;
 }
+.login-form > input{
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+.login-form > input[type="submit"]{
+    padding: 6px 16px;
+    background-color: var(--gray-900);
+    color: white;
+    border-radius: 6px;
+    border: none;
+}
+.login-form > input[type="submit"]:hover{
+    background-color: var(--teal-700);
+}
+.edit-order-table thead tr th {
+    padding: 8px;
+    background-color: var(--teal-700);
+    color: white;
+}
+.edit-order-table tbody tr td {
+    padding: 8px;
+}
+.edit-order-table tbody tr:nth-child(even) td {
+    background-color: var(--gray-300);
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}

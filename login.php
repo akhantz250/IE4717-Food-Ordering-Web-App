@@ -20,13 +20,15 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $_SESSION["username"] = $username;
         $query = "SELECT OrderID FROM userorders WHERE UserID = '$userID'";
         $result = $conn -> query($query);
-        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $orders = array();
-        foreach ($rows as $row) {
-            $order = $row["OrderID"];
-            array_push($orders, $order);
+        if ($result -> num_rows > 0) {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            $orders = array();
+            foreach ($rows as $row) {
+                $order = $row["OrderID"];
+                array_push($orders, $order);
+            }
+            $_SESSION["placedorders"] = $orders;
         }
-        $_SESSION["placedorders"] = $orders;
         header("Location: ./index.php");
         $conn -> close();
         die();
@@ -36,18 +38,18 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 }
 ?>
     <main class="main-section">
-        <h1 class="section-header">Log In Page</h1>
+        <h1 class="section-header">Log-In</h1>
         <div class="centered-container">
-        <form action="./login.php" method="post" style="display: flex; flex-direction:column; align-items:center;">
+        <form action="./login.php" method="post" style="display: flex; flex-direction:column; align-items:center;" class="login-form">
             <label for="username">Username</label>
             <input type="text" name="username" id="password">
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
             <input id="login-btn" type="submit" value="Log me in" style="margin-top: 24px ;">
         </form>
-        <div style="color: red; margin-top: 40px;"><?php echo $displayMessage ?></div>
+        <div style="color: red; margin-top: 16px;"><?php echo $displayMessage ?></div>
         </div>
-        <div style="margin-top: 42px; text-align:center;"><a style="color:blue; text-decoration:underline" href="./register.php">No account? Sign Up Here!</a></div>
+        <div style="margin-top: 32px; text-align:center;"><a style="color:blue; text-decoration:underline" href="./register.php">No account? Sign Up Here!</a></div>
     </main> 
     <footer>
         Project for IE4717 by Zaw and Zion

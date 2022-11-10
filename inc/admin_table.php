@@ -15,7 +15,7 @@
 			$msg= "Table Name is empty";
 		}else{
 			$columnName = implode(", ", $columns);
-			$query = "SELECT ".$columnName." FROM $tableName"." ";
+			$query = "SELECT ".$columnName." FROM $tableName"." ORDER BY OrderID DESC ";
 			$result = $db->query($query);
 			
 	if($result== true){ 
@@ -31,9 +31,4 @@
 		}
 		return $msg;
 	}
-	
-
-
-  
-
 ?>
