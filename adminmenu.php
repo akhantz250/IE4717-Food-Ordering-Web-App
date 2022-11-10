@@ -14,7 +14,6 @@
             $conn -> query($query);
         }
     }
-    include "./inc/db_connection.php";
     $rows;
     $query = "SELECT MenuID, Name, Price, Category, ImageURL, Availability FROM menu";
     $result = $conn -> query($query);
@@ -39,24 +38,7 @@
 </head>
 
 <body>
-    <header class="header">
-        <a href="index.php"><p id="site-name">PRIMAVERA</p></a>
-        <nav class="nav-bar">
-            <ul>
-                <li><a href="./adminmenu.php">Menu</a></li>
-                <li><a href="#">Sales</a></li>
-                <li><a href="#">Feedback</a></li>
-                <li><a href="ordermanagement.php">Orders</a></li>
-                <li>
-                <a href="adminlogout.php">
-                    <span style="display: flex; align-items:center" class="material-symbols-outlined icon">
-                            logout
-                    </span>
-                </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <?php include "./inc/admin_header.php"?>
     <main class="main-section">
     <h1 class="section-header">Update Menu</h1>
     <table border='1' style="width:80%; margin:auto;border-collapse: collapse;" class="edit-order-table">
@@ -66,6 +48,7 @@
 					<th>Price</th>
 					<th>Availability</th>
 					<th>Update</th>
+                </tr>
 			</thead>
 			<tbody>
                 <?php if (is_array($rows)) : ?>

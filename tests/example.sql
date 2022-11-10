@@ -12,3 +12,10 @@ GROUP BY orderitems.MenuID;
 
 
  -- get top selling mains, starters, dessert and drink
+
+ SELECT menu.Name, orderitems.MenuID, SUM(orderitems.Quantity) 
+ FROM menu INNER JOIN orderitems ON menu.MenuID = orderitems.MenuID 
+ INNER JOIN orders ON orderitems.OrderID = orders.OrderID WHERE DateCreated >= '2022-11-10' AND DateCreated < DATE_ADD('2022-11-10', INTERVAL 24 DAY_HOUR) 
+ AND menu.Category = 'desserts' GROUP BY orderitems.MenuID 
+ ORDER BY SUM(orderitems.Quantity) 
+ DESC LIMIT 1;
