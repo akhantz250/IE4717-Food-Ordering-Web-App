@@ -13,7 +13,6 @@ if (isset($_POST["name"]) && isset($_POST["body"]) && isset($_POST["email"]) && 
     $conn->close();
 }
 ?>
-
 <main class="contact">
     <section class="info">
         <div class="info-container">
@@ -118,5 +117,4 @@ if (isset($_POST["name"]) && isset($_POST["body"]) && isset($_POST["email"]) && 
     Project for IE4717 by Zaw and Zion
 </footer>
 </body>
-
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $myObj;
-if(!isset($_POST["empty"]) || $_POST["empty"] != "true") {
+if (!isset($_POST["empty"]) || $_POST["empty"] != "true") {
     $myObj = ["success" => false];
     echo json_encode($myObj);
     die();

@@ -1,27 +1,27 @@
-<?php 
-    session_start();
-    if (!isset($_SESSION["isAdmin"])) {
-        header("Location: ./forbidden.php");
-        die();
+<?php
+session_start();
+if (!isset($_SESSION["isAdmin"])) {
+    header("Location: ./forbidden.php");
+    die();
+}
+include "./inc/db_connection.php";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST["menuID"]) && isset($_POST["price"]) && isset($_POST["availability"])) {
+        $menuID = $_POST["menuID"];
+        $price = $_POST["price"];
+        $availability = $_POST["availability"];
+        $query = "UPDATE menu SET Price='$price',Availability='$availability' WHERE MenuID = '$menuID'";
+        $conn->query($query);
     }
-    include "./inc/db_connection.php";
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST["menuID"]) && isset($_POST["price"]) && isset($_POST["availability"])) {
-            $menuID = $_POST["menuID"];
-            $price = $_POST["price"];
-            $availability = $_POST["availability"];
-            $query = "UPDATE menu SET Price='$price',Availability='$availability' WHERE MenuID = '$menuID'";
-            $conn -> query($query);
-        }
-    }
-    $rows;
-    $query = "SELECT MenuID, Name, Price, Category, ImageURL, Availability FROM menu";
-    $result = $conn -> query($query);
-    if ($result -> num_rows > 0) {
-        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        $rows = false;
-    }
+}
+$rows;
+$query = "SELECT MenuID, Name, Price, Category, ImageURL, Availability FROM menu";
+$result = $conn->query($query);
+if ($result->num_rows > 0) {
+    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    $rows = false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,47 +38,47 @@
 </head>
 
 <body>
-    <?php include "./inc/admin_header.php"?>
+    <?php include "./inc/admin_header.php" ?>
     <main class="main-section">
-    <h1 class="section-header">Update Menu</h1>
-    <table border='1' style="width:80%; margin:auto;border-collapse: collapse;" class="edit-order-table">
-			<thead>
-				<tr>
-					<th>Menu Item</th>
-					<th>Price</th>
-					<th>Availability</th>
-					<th>Update</th>
+        <h1 class="section-header">Update Menu</h1>
+        <table border='1' style="width:80%; margin:auto;border-collapse: collapse;" class="edit-order-table">
+            <thead>
+                <tr>
+                    <th>Menu Item</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+                    <th>Update</th>
                 </tr>
-			</thead>
-			<tbody>
+            </thead>
+            <tbody>
                 <?php if (is_array($rows)) : ?>
-                    <?php foreach($rows as $row) : ?>
-                        <?php $available = ($row["Availability"] == 'yes')? true : false; ?>
+                    <?php foreach ($rows as $row) : ?>
+                        <?php $available = ($row["Availability"] == 'yes') ? true : false; ?>
                         <tr>
                             <td>
                                 <div class="flex-row">
-                                <img src="./src/img/fooditems/<?php echo $row["ImageURL"]; ?>.png" alt="" style="width: 64px; height:64px; display: block;">                     
-                                <div style="margin-left: 16px;">
-                                    <div><?php echo $row["Name"]; ?></div>
-                                    <p style="opacity: 0.4; margin-top: 8px"><?php echo ucfirst($row["Category"]); ?></p>
-                                </div>
+                                    <img src="./src/img/fooditems/<?php echo $row["ImageURL"]; ?>.png" alt="" style="width: 64px; height:64px; display: block;">
+                                    <div style="margin-left: 16px;">
+                                        <div><?php echo $row["Name"]; ?></div>
+                                        <p style="opacity: 0.4; margin-top: 8px"><?php echo ucfirst($row["Category"]); ?></p>
+                                    </div>
                                 </div>
                             </td>
                             <form action="./adminmenu.php" method="post" class="menu-form">
                                 <td><input type="text" value="<?php echo $row["Price"]; ?>" name="price"></td>
                                 <td><select name="availability">
-                                    <option value="yes" <?php if ($available) echo "selected='selected'"?>>Yes</option>
-                                    <option value="no" <?php if (!$available) echo "selected='selected'"?>>No</option>
-                                </select></td>
+                                        <option value="yes" <?php if ($available) echo "selected='selected'" ?>>Yes</option>
+                                        <option value="no" <?php if (!$available) echo "selected='selected'" ?>>No</option>
+                                    </select></td>
                                 <td>
-                                 <button type="submit" value="<?php echo $row["MenuID"]; ?>" name="menuID">Update</button>
+                                    <button type="submit" value="<?php echo $row["MenuID"]; ?>" name="menuID">Update</button>
                                 </td>
                             </form>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </tbody>
-		</table>
+        </table>
     </main>
     <script>
         const formList = document.querySelectorAll(".menu-form");
@@ -97,6 +97,6 @@
     </script>
 </body>
 <footer>
-        Project for IE4717 by Zaw and Zion
-    </footer>
+    Project for IE4717 by Zaw and Zion
+</footer>
 </body>

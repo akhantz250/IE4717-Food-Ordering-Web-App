@@ -14,7 +14,7 @@ $display = ($show_order) ? "success" : "failure";
 <main class="main-section">
     <h1 class="section-header">Your Orders</h1>
     <div class="centered-container">
-        <?php if(!$show_order): ?>
+        <?php if (!$show_order) : ?>
             <div>You haven't made an order.</div>
         <?php endif; ?>
         <?php if ($show_order) : ?>
@@ -23,12 +23,12 @@ $display = ($show_order) ? "success" : "failure";
                 $query = "SELECT DateCreated, Progress FROM orderprogress WHERE OrderID = '$orderno'";
                 $result = $conn->query($query);
 
-                if ($result -> num_rows == 0) {
+                if ($result->num_rows == 0) {
                     header("Location: ./forbidden.php");
-                    $conn -> close();
+                    $conn->close();
                     die();
                 }
-                
+
                 $data = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0];
                 ?>
                 <div class="view-order-row">

@@ -76,4 +76,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['cart'])) {
     die();
 }
 session_abort();
-?>

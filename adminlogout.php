@@ -1,12 +1,10 @@
-<?php include "./inc/header.php"; 
-    $isLoggedOut = false;
-    if (isset($_SESSION["isAdmin"])) {
-        unset($_SESSION["isAdmin"]);
-        $isLoggedOut = true;
-    }
+<?php include "./inc/header.php";
+$isLoggedOut = false;
+if (isset($_SESSION["isAdmin"])) {
+    unset($_SESSION["isAdmin"]);
+    $isLoggedOut = true;
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +20,14 @@
 
 <body>
     <header class="header">
-        <a href="index.php"><p id="site-name">PRIMAVERA</p></a>
+        <a href="index.php">
+            <p id="site-name">PRIMAVERA</p>
+        </a>
     </header>
     <main class="main-section">
         <h1 class="section-header">Log-Out</h1>
         <div class="centered-container">
-            <?php 
+            <?php
             if ($isLoggedOut) {
                 echo "You are logged out.";
             } else {
@@ -36,8 +36,8 @@
             ?>
             <a href="./adminlogin.php" style="color: blue; margin-top:32px;">Log In</a>
         </div>
-    </main> 
+    </main>
 </body>
 <footer>
-        Project for IE4717 by Zaw and Zion
+    Project for IE4717 by Zaw and Zion
 </footer>

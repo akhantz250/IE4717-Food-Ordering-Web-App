@@ -28,65 +28,65 @@ if (is_array($fetchData)) {
     }
 }
 ?>
-    <?php include "./inc/admin_header.php"?>
-    <main class="main-section">
+<?php include "./inc/admin_header.php" ?>
+<main class="main-section">
     <h1 class="section-header">Manage Orders</h1>
-        <table border='1' style="width:80%; margin:auto; border-collapse: collapse; text-align: center; " class="edit-order-table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Items</th>
-                    <th>Progress</th>
-                    <th>Update</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (is_array($fetchData)) : ?>
-                    <?php foreach ($fetchData as $data) : ?>
-                        <tr>
+    <table border='1' style="width:80%; margin:auto; border-collapse: collapse; text-align: center; " class="edit-order-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Items</th>
+                <th>Progress</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (is_array($fetchData)) : ?>
+                <?php foreach ($fetchData as $data) : ?>
+                    <tr>
 
-                            <td><?php echo $data['OrderID'] ?? ''; ?></td>
-                            <td><?php
-                                $query = "SELECT orderitems.OrderID, menu.Name, orderitems.Quantity FROM orderitems INNER JOIN menu
+                        <td><?php echo $data['OrderID'] ?? ''; ?></td>
+                        <td><?php
+                            $query = "SELECT orderitems.OrderID, menu.Name, orderitems.Quantity FROM orderitems INNER JOIN menu
 								ON orderitems.MenuID=menu.MenuID";
-                                $result = $conn->query($query);
+                            $result = $conn->query($query);
 
-                                while ($row = $result->fetch_assoc())
-                                    if ($data['OrderID'] == $row['OrderID']) {
-                                        echo $row['Name'] . " x " . $row['Quantity'] . "<br />";
-                                    }
-                                ?></td>
-
-                            <td><?php
-                                if ($data['Progress'] == 1) {
-                                    echo 'New';
-                                } else if ($data['Progress'] == 2) {
-                                    echo 'Preparing';
-                                } else if ($data['Progress'] == 3) {
-                                    echo 'Delivering';
-                                } else if ($data['Progress'] == 4) {
-                                    echo 'Completed';
-                                } else {
-                                    echo 'error';
+                            while ($row = $result->fetch_assoc())
+                                if ($data['OrderID'] == $row['OrderID']) {
+                                    echo $row['Name'] . " x " . $row['Quantity'] . "<br />";
                                 }
-                                ?></td>
+                            ?></td>
 
-                            <td>
-                                <form method="post" action="ordermanagement.php">
-                                    <select list name="input">
-                                        <option value="" disabled selected></option>
-                                        <option value=2>Preparing</option>
-                                        <option value=3>Delivery</option>
-                                        <option value=4>Completed</option>
-                                        <label><input type=submit value="Update" name="<?php echo $data['OrderID'] ?? ''; ?>"></label>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </main>
+                        <td><?php
+                            if ($data['Progress'] == 1) {
+                                echo 'New';
+                            } else if ($data['Progress'] == 2) {
+                                echo 'Preparing';
+                            } else if ($data['Progress'] == 3) {
+                                echo 'Delivering';
+                            } else if ($data['Progress'] == 4) {
+                                echo 'Completed';
+                            } else {
+                                echo 'error';
+                            }
+                            ?></td>
+
+                        <td>
+                            <form method="post" action="ordermanagement.php">
+                                <select list name="input">
+                                    <option value="" disabled selected></option>
+                                    <option value=2>Preparing</option>
+                                    <option value=3>Delivery</option>
+                                    <option value=4>Completed</option>
+                                    <label><input type=submit value="Update" name="<?php echo $data['OrderID'] ?? ''; ?>"></label>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</main>
 </body>
 <footer>
     Project for IE4717 by Zaw and Zion

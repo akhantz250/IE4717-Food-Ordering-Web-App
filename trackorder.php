@@ -17,10 +17,10 @@ if (isset($_GET['orderno']) && isset($_SESSION['placedorders'])) {
     }
     $query = "SELECT Progress FROM orderprogress WHERE OrderID = '$orderno'";
     $result = $conn->query($query);
-    if ($result -> num_rows == 0) {
+    if ($result->num_rows == 0) {
         // order does not exist. redirect.
         header("Location: ./forbidden.php");
-        $conn -> close();
+        $conn->close();
         die();
     }
     $current_progress = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]['Progress'];
@@ -34,7 +34,7 @@ if (isset($_GET['orderno']) && isset($_SESSION['placedorders'])) {
 if (!$show_order) {
     // the customer didn't make this order. redirect.
     header("Location: ./forbidden.php");
-    $conn -> close();
+    $conn->close();
     die();
 }
 $displayOrder = ($show_order) ? $orderno : "ERROR";
@@ -50,13 +50,13 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
                 </div>
             </div>
             <div class="order-items-container">
-                    <?php foreach ($order_items as $item): ?>
-                        <div style="display: flex; flex-direction:row; padding:8px 32px; justify-content: space-between; align-items:center">
-                            <img class="display-img" src="./src/img/fooditems/<?php echo $item["ImageURL"]?>.png" alt="" srcset="" style="width: 64px;height:64px;">
-                            <p><?php echo $item["Name"]?></p>
-                            <p>x<?php echo $item["Quantity"]?></p>
-                        </div>
-                    <?php endforeach; ?>
+                <?php foreach ($order_items as $item) : ?>
+                    <div style="display: flex; flex-direction:row; padding:8px 32px; justify-content: space-between; align-items:center">
+                        <img class="display-img" src="./src/img/fooditems/<?php echo $item["ImageURL"] ?>.png" alt="" srcset="" style="width: 64px;height:64px;">
+                        <p><?php echo $item["Name"] ?></p>
+                        <p>x<?php echo $item["Quantity"] ?></p>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -80,13 +80,13 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
     <section class="timeline">
         <div class="timeline-grid">
             <?php if ($current_progress >= 4) : ?>
-                <?php 
-                    $query = "SELECT DeliveryStart FROM orderprogress WHERE OrderID = '$orderno'";
-                    $result = $conn -> query($query);
-                    $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DeliveryStart"];
-                    $time = substr($date_string, 11, 5);
+                <?php
+                $query = "SELECT DeliveryStart FROM orderprogress WHERE OrderID = '$orderno'";
+                $result = $conn->query($query);
+                $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DeliveryStart"];
+                $time = substr($date_string, 11, 5);
                 ?>
-                <div class="timeline-time"><?php echo $time?></div>
+                <div class="timeline-time"><?php echo $time ?></div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -100,57 +100,57 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
             <?php endif; ?>
 
             <?php if ($current_progress >= 3) : ?>
-                <?php 
-                    $query = "SELECT DeliveryStart FROM orderprogress WHERE OrderID = '$orderno'";
-                    $result = $conn -> query($query);
-                    $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DeliveryStart"];
-                    $time = substr($date_string, 11, 5);
-                    $title_display = ($current_progress == 3)? "Delivering Order" : "Delivered Order";
-                    $description_display = ($current_progress ==3)? "Delivery is on its way.": "We have delivered your order.";
+                <?php
+                $query = "SELECT DeliveryStart FROM orderprogress WHERE OrderID = '$orderno'";
+                $result = $conn->query($query);
+                $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DeliveryStart"];
+                $time = substr($date_string, 11, 5);
+                $title_display = ($current_progress == 3) ? "Delivering Order" : "Delivered Order";
+                $description_display = ($current_progress == 3) ? "Delivery is on its way." : "We have delivered your order.";
                 ?>
-                <div class="timeline-time"><?php echo $time?></div>
+                <div class="timeline-time"><?php echo $time ?></div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
                         <img src="./src/img/order/fast-delivery.png" alt="">
                     </div>
                     <div>
-                        <div class="timeline-card-title"><?php echo $title_display?></div>
-                        <div class="timeline-card-description"><?php echo $description_display?></div>
+                        <div class="timeline-card-title"><?php echo $title_display ?></div>
+                        <div class="timeline-card-description"><?php echo $description_display ?></div>
                     </div>
                 </div>
             <?php endif; ?>
 
             <?php if ($current_progress >= 2) : ?>
-                <?php 
-                    $query = "SELECT PreparationStart FROM orderprogress WHERE OrderID = '$orderno'";
-                    $result = $conn -> query($query);
-                    $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["PreparationStart"];
-                    $time = substr($date_string, 11, 5);
-                    $title_display = ($current_progress == 2)? "Preparing Order" : "Prepared Order";
-                    $description_display = ($current_progress ==2)? "We are preparing you order.": "We have prepared your order.";
+                <?php
+                $query = "SELECT PreparationStart FROM orderprogress WHERE OrderID = '$orderno'";
+                $result = $conn->query($query);
+                $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["PreparationStart"];
+                $time = substr($date_string, 11, 5);
+                $title_display = ($current_progress == 2) ? "Preparing Order" : "Prepared Order";
+                $description_display = ($current_progress == 2) ? "We are preparing you order." : "We have prepared your order.";
                 ?>
-                <div class="timeline-time"><?php echo $time?></div>
+                <div class="timeline-time"><?php echo $time ?></div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
                         <img src="./src/img/order/cooking.png" alt="">
                     </div>
                     <div>
-                        <div class="timeline-card-title"><?php echo $title_display?></div>
-                        <div class="timeline-card-description"><?php echo $description_display?></div>
+                        <div class="timeline-card-title"><?php echo $title_display ?></div>
+                        <div class="timeline-card-description"><?php echo $description_display ?></div>
                     </div>
                 </div>
             <?php endif; ?>
 
             <?php if ($current_progress >= 1) : ?>
-                <?php 
-                    $query = "SELECT DateCreated FROM orderprogress WHERE OrderID = '$orderno'";
-                    $result = $conn -> query($query);
-                    $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DateCreated"];
-                    $time = substr($date_string, 11, 5);
+                <?php
+                $query = "SELECT DateCreated FROM orderprogress WHERE OrderID = '$orderno'";
+                $result = $conn->query($query);
+                $date_string = (mysqli_fetch_all($result, MYSQLI_ASSOC))[0]["DateCreated"];
+                $time = substr($date_string, 11, 5);
                 ?>
-                <div class="timeline-time"><?php echo $time?></div>
+                <div class="timeline-time"><?php echo $time ?></div>
                 <div class="timeline-checkmark"></div>
                 <div class="timeline-card">
                     <div class="timeline-card-icon">
@@ -180,5 +180,6 @@ $displayDateTime = ($show_order) ? $data["DateCreated"] : "ERROR";
     }
 </script>
 </body>
+
 </html>
 <?php $conn->close(); ?>
